@@ -1,0 +1,7 @@
+
+1. Create HTML page with 1 button div
+2. Calculate the sum of 20 and -10 and store the result in a variable named firstCode
+3. Divide 80 by 2 and store the result in a variable named secondCode
+4. Add 39 and 0 and store the result in a variable named thirdCode
+5. Create a string that combines the results from the boxes firstCode, secondCode, and thirdCode
+6. JS click on the element alert pop up
