@@ -1,18 +1,24 @@
+const countFrequencies = (arr) => {
+    let counts = {};
+
+    for (let item of arr) {
+        if (counts[item]) {
+            counts[item]++;
+        } else {
+            counts[item] = 1;
+        }
+    }
+
+    return counts;
+};
+
 const userInputString = prompt(
-    "Please enter some integers separated by commas.",
-    "vanilla,vanilla,vanilla,strawberry,coffee,coffee"
+    "Please enter flavors separated by commas.",
+    "vanilla,vanilla,vanilla,strawberry,coffee,coffee, oreo, choc, choc, oreo, vanilla"
 );
 
-const userInputArray = userInputString.split(",");
+const userInputArray = userInputString.split(",").map(str => str.trim());
 
-let flavorCounts = {};
-
-for (let flavor of userInputArray) {
-    if (flavorCounts[flavor]) {
-        flavorCounts[flavor]++;
-    } else {
-        flavorCounts[flavor] = 1;
-    }
-}
+const flavorCounts = countFrequencies(userInputArray);
 
 console.table(flavorCounts);
