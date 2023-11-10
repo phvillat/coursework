@@ -1,0 +1,47 @@
+Main Page
+-------------------------------------------------------------------------------------------------
+Should show a nicely formatted list of all players
+
+Test: visit the main page
+Expected Result: The main page should show a list of all players on the roster
+-------------------------------------------------------------------------------------------------
+
+Each player on the roster should be shown with two buttons:
+A "See details" button that lets us view the details for that player. This should show at least:
+The player's name, breed, and assigned team (or "unassigned" if they do not have a team)
+A larger version of the picture
+A button to go back to the main list
+
+Test: click the "See details" button for a player
+Expected Result: The details for that player should be shown(see above)
+-------------------------------------------------------------------------------------------------
+A "Remove" button that takes that player off the roster
+Test: click the "Remove" button for a player
+Expected Result: That player should be removed from the roster
+--------------------------------------------------------------------------------------------------
+
+
+
+Adding Player(s)
+--------------------------------------------------------------------------------------------------
+There should be a form on the page that allows us to add a new player.
+The form should have at least two inputs and a button:
+One input for the player name
+One input for the player's breed
+A submit button to send the data and add the player to the roster
+Test: fill out the form and click the submit button
+Expected Result: The new player should be added to the roster
+--------------------------------------------------------------------------------------------------
+When entering a name and breed into the form and then hitting "submit", the new player should pop up in the roster without a page refresh.
+Test: fill out the form and click the submit button
+Expected Result: The new player should be added to the roster dynamically without a page refresh
+--------------------------------------------------------------------------------------------------
+
+
+
+
+Removing Player(s)
+--------------------------------------------------------------------------------------------------
+When removing a player, they should disappear from the roster without a page refresh.
+Test: click the "Remove" button for a player
+Expected Result: That player should be removed from the roster dynamically without a page refresh

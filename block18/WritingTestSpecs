@@ -1,0 +1,40 @@
+Unit Tests for "multiplication" Function
+
+Expectations:
+The function returns the product of two numbers
+The function handles various data types correctly
+
+Test Specifications:
+Expect multiplication(2, 3) to return a number
+Expect multiplication(2, 3) to be equal to 6
+Expect multiplication(undefined, 3) to throw a type error (test with undefined)
+--------------------------------------------------------------------------------------
+
+Unit Tests for "concatOdds" Function
+
+Expectations:
+The function takes two arrays of integers and returns a single sorted array of the odd integers from both
+It should handle unexpected inputs
+It should handle duplicates
+
+Test Specifications:
+Expect concatOdds([3, 2, 1], [9, 1, 1, 1, 4, 15, -1]) to return an array
+Expect concatOdds([3, 2, 1], [9, 1, 1, 1, 4, 15, -1]) to be equal to [-1, 1, 3, 9, 15]
+Expect concatOdds([2, 4, 6], [8, 10, 12]) to return an empty array (test with no odd numbers)
+Expect concatOdds(["a", 3], [5, "b"]) to throw an error
+Expect concatOdds([3, 2, 1], [3, 1]) to include duplicates only once and be sorted to [1, 3]
+--------------------------------------------------------------------------------------
+
+Functional Tests for Shopping Cart
+
+Expectations:
+The user can check out as a guest or account user
+The user is prompted to create an account or log in if they choose to check out as a guest
+The user is informed of each step in the checkout process
+
+Test Specifications:
+When a user attempts to check out with an empty cart, they should be informed that the cart is empty and be given options to continue shopping
+When a logged-in user clicks "Check Out", they should be directed to the payment and confirmation step
+When a guest clicks "Check Out", they should be asked to provide necessary information and then prompted to log in or create an account
+When a guest user opts to create an account during checkout, they should be taken through the account creation process and then redirected back to the checkout process
+When a guest user opts to log in during checkout, they should be able to log in and then be redirected back to the checkout process
