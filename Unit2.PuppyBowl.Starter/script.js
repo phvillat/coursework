@@ -4,13 +4,12 @@ const newPlayerFormContainer = document.getElementById('new-player-form');
 // Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
 const cohortName = '2308-acc-et-web-pt-a';
 // Use the APIURL variable for fetch requests
-const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/`;
+const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players`;
 
 // Fetch all players from the API
 const fetchAllPlayers = async () => {
     try {
-        //const response = await fetch(APIURL);
-        const response = await fetch('https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players');
+        const response = await fetch(APIURL);
         if (!response.ok) throw new Error('Network response was not ok');
         const results = await response.json();
         return results.data.players;
@@ -22,9 +21,10 @@ const fetchAllPlayers = async () => {
 // Fetch a single player by ID
 const fetchSinglePlayer = async (playerId) => {
     try {
-        const response = await fetch(`${APIURL}${playerId}`);
+        const response = await fetch(`${APIURL}/${playerId}`);
         if (!response.ok) throw new Error('Network response was not ok');
-        return await response.json();
+        const result = await response.json();
+        return result.data.player;
     } catch (err) {
         console.error(`Oh no, trouble fetching player #${playerId}!`, err);
     }
@@ -33,7 +33,7 @@ const fetchSinglePlayer = async (playerId) => {
 // Add a new player to the API
 const addNewPlayer = async (playerObj) => {
     try {
-        const response = await fetch(APIURL, {
+        const response = await fetch(`${APIURL}/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +41,8 @@ const addNewPlayer = async (playerObj) => {
             body: JSON.stringify(playerObj),
         });
         if (!response.ok) throw new Error('Network response was not ok');
-        return await response.json();
+        const result = await response.json();
+        return result.data.newPlayer;
     } catch (err) {
         console.error('Oops, something went wrong with adding that player!', err);
     }
@@ -50,7 +51,7 @@ const addNewPlayer = async (playerObj) => {
 // Remove a player from the API
 const removePlayer = async (playerId) => {
     try {
-        const response = await fetch(`${APIURL}${playerId}`, {
+        const response = await fetch(`${APIURL}/${playerId}`, {
             method: 'DELETE',
         });
         if (!response.ok) throw new Error('Network response was not ok');
@@ -71,8 +72,8 @@ const renderAllPlayers = (playerList) => {
             playerContainerHTML += `
                 <div class="player-card">
                     <h3>${player.name}</h3>
+                    <img class="playerImg" src="${player.imageUrl}" alt="">
                     <p>Breed: ${player.breed}</p>
-                    <p>Age: ${player.age}</p>
                     <button onclick="handleViewDetails(${player.id})">See details</button>
                     <button onclick="handleRemovePlayer(${player.id})">Remove from roster</button>
                 </div>
@@ -87,7 +88,19 @@ const renderAllPlayers = (playerList) => {
 // Event handler for viewing player details
 const handleViewDetails = async (playerId) => {
     const playerDetails = await fetchSinglePlayer(playerId);
+
     // Additional logic to render player details to the DOM can be implemented here
+    const detailsContainer = document.getElementById('player-details-container');
+
+    // Create HTML content with player details
+    const playerDetailsHTML = `
+        <h3>${playerDetails.name}</h3>
+        <img src="${playerDetails.imageUrl}" alt="${playerDetails.name}">
+        <p>Breed: ${playerDetails.breed}</p>
+    `;
+
+    detailsContainer.innerHTML = playerDetailsHTML;
+
 };
 
 // Event handler for removing a player
@@ -104,7 +117,7 @@ const renderNewPlayerForm = () => {
             <form id="new-player-form">
                 <input type="text" id="player-name" placeholder="Name" required />
                 <input type="text" id="player-breed" placeholder="Breed" required />
-                <input type="number" id="player-age" placeholder="Age" required />
+                <input type="text" id="player-status" placeholder="Status" required />
                 <button type="submit">Add Player</button>
             </form>
         `;
@@ -119,9 +132,9 @@ const handleAddNewPlayer = async (event) => {
     event.preventDefault();
     const name = document.getElementById('player-name').value;
     const breed = document.getElementById('player-breed').value;
-    const age = document.getElementById('player-age').value;
+    const status = document.getElementById('player-status').value;
 
-    const newPlayer = { name, breed, age };
+    const newPlayer = { name, breed, status };
     await addNewPlayer(newPlayer);
     const players = await fetchAllPlayers();
     renderAllPlayers(players);
@@ -130,7 +143,6 @@ const handleAddNewPlayer = async (event) => {
 // Initialize the app
 const init = async () => {
     const players = await fetchAllPlayers();
-    console.log(players);
     renderAllPlayers(players);
     renderNewPlayerForm();
 };
