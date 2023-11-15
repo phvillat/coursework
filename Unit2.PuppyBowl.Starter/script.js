@@ -1,12 +1,13 @@
+
+// DOM elements references
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
 
-// Add your cohort name to the cohortName variable below, replacing the 'COHORT-NAME' placeholder
+
 const cohortName = '2308-acc-et-web-pt-a';
-// Use the APIURL variable for fetch requests
 const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players`;
 
-// Fetch all players from the API
+
 const fetchAllPlayers = async () => {
     try {
         const response = await fetch(APIURL);
@@ -18,7 +19,6 @@ const fetchAllPlayers = async () => {
     }
 };
 
-// Fetch a single player by ID
 const fetchSinglePlayer = async (playerId) => {
     try {
         const response = await fetch(`${APIURL}/${playerId}`);
@@ -30,7 +30,6 @@ const fetchSinglePlayer = async (playerId) => {
     }
 };
 
-// Add a new player to the API
 const addNewPlayer = async (playerObj) => {
     try {
         const response = await fetch(`${APIURL}/`, {
@@ -48,7 +47,6 @@ const addNewPlayer = async (playerObj) => {
     }
 };
 
-// Remove a player from the API
 const removePlayer = async (playerId) => {
     try {
         const response = await fetch(`${APIURL}/${playerId}`, {
@@ -64,7 +62,7 @@ const removePlayer = async (playerId) => {
     }
 };
 
-// Render all players to the DOM
+
 const renderAllPlayers = (playerList) => {
     try {
         let playerContainerHTML = '';
@@ -85,32 +83,34 @@ const renderAllPlayers = (playerList) => {
     }
 };
 
-// Event handler for viewing player details
+
 const handleViewDetails = async (playerId) => {
     const playerDetails = await fetchSinglePlayer(playerId);
 
-    // Additional logic to render player details to the DOM can be implemented here
-    const detailsContainer = document.getElementById('player-details-container');
+    const modelContent = `<div class="modal-content">
+    <span class="close-button">&times;</span>
+    <h3>${playerDetails.name}</h3>
+    <img src="${playerDetails.imageUrl}" alt="${playerDetails.name}">
+    <p>Breed: ${playerDetails.breed}</p>
+    </div>`
 
-    // Create HTML content with player details
-    const playerDetailsHTML = `
-        <h3>${playerDetails.name}</h3>
-        <img src="${playerDetails.imageUrl}" alt="${playerDetails.name}">
-        <p>Breed: ${playerDetails.breed}</p>
-    `;
+    const modal = document.getElementById('details-modal');
+    modal.innerHTML = modelContent;
+    modal.style.display = "block";
 
-    detailsContainer.innerHTML = playerDetailsHTML;
-
+    document.querySelector('.close-button').addEventListener('click', () => {
+        modal.style.display = "none";
+    });
+    
 };
 
-// Event handler for removing a player
+
 const handleRemovePlayer = async (playerId) => {
     await removePlayer(playerId);
     const players = await fetchAllPlayers();
     renderAllPlayers(players);
 };
 
-// Render the form for adding a new player to the DOM
 const renderNewPlayerForm = () => {
     try {
         newPlayerFormContainer.innerHTML = `
@@ -127,7 +127,6 @@ const renderNewPlayerForm = () => {
     }
 };
 
-// Event handler for adding a new player
 const handleAddNewPlayer = async (event) => {
     event.preventDefault();
     const name = document.getElementById('player-name').value;
@@ -140,12 +139,10 @@ const handleAddNewPlayer = async (event) => {
     renderAllPlayers(players);
 };
 
-// Initialize the app
 const init = async () => {
     const players = await fetchAllPlayers();
     renderAllPlayers(players);
     renderNewPlayerForm();
 };
 
-// Start the application
 init();
