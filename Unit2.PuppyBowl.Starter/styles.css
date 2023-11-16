@@ -8,6 +8,13 @@ body {
     font-family: Arial, sans-serif;
 }
 
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+
+}
+
 #new-player-form,
 #all-players-container {
     display: flex;
@@ -17,6 +24,10 @@ body {
 
 #new-player-form form {
     display: flex;
+    /* study */
+    margin: 0 auto;
+    width: 50%;
+    /* study */
     flex-direction: column;
     width: 300px;
     margin-bottom: 20px;
@@ -46,6 +57,11 @@ body {
 
 .player-card {
     display: flex;
+    max-width: 1000px;
+    /* study */
+    margin: 0 auto;
+    width: 100%;
+    /* study */
     flex-direction: column;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -57,15 +73,17 @@ body {
 .player-card .playerImg {
     display: flex;
     justify-content: center;
+    max-width: 100%;
+    max-height: 100%;
+    margin-bottom: 10px;
 
-    img {
-        max-width: 100%;
-        max-height: 100%;
-    }
 }
 
 .player-card h3 {
+    display: flex;
+    margin-bottom: 5px;
     color: #333;
+    justify-content: center;
 }
 
 .player-card p {
@@ -74,7 +92,7 @@ body {
 
 .player-card button {
     padding: 5px 10px;
-    margin-right: 10px;;
+    margin-right: 10px;
     margin-top: 10px;
     background-color: #28a745;
     color: white;
@@ -109,6 +127,11 @@ body {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+}
+
+.modal-content p {
+    margin-top: 5px;
+    margin-bottom: 5px
 }
 
 .modal-content img {

@@ -1,8 +1,5 @@
-
-// DOM elements references
 const playerContainer = document.getElementById('all-players-container');
 const newPlayerFormContainer = document.getElementById('new-player-form');
-
 
 const cohortName = '2308-acc-et-web-pt-a';
 const APIURL = `https://fsa-puppy-bowl.herokuapp.com/api/${cohortName}/players`;
@@ -92,6 +89,7 @@ const handleViewDetails = async (playerId) => {
     <h3>${playerDetails.name}</h3>
     <img src="${playerDetails.imageUrl}" alt="${playerDetails.name}">
     <p>Breed: ${playerDetails.breed}</p>
+    <p>Status: ${playerDetails.status.charAt(0).toUpperCase() + playerDetails.status.slice(1)}</p>
     </div>`
 
     const modal = document.getElementById('details-modal');
@@ -101,7 +99,7 @@ const handleViewDetails = async (playerId) => {
     document.querySelector('.close-button').addEventListener('click', () => {
         modal.style.display = "none";
     });
-    
+
 };
 
 
@@ -118,6 +116,7 @@ const renderNewPlayerForm = () => {
                 <input type="text" id="player-name" placeholder="Name" required />
                 <input type="text" id="player-breed" placeholder="Breed" required />
                 <input type="text" id="player-status" placeholder="Status" required />
+                <input type="text" id="player-image-url" placeholder="Image URL" required />
                 <button type="submit">Add Player</button>
             </form>
         `;
@@ -127,17 +126,27 @@ const renderNewPlayerForm = () => {
     }
 };
 
+
+
 const handleAddNewPlayer = async (event) => {
     event.preventDefault();
     const name = document.getElementById('player-name').value;
     const breed = document.getElementById('player-breed').value;
     const status = document.getElementById('player-status').value;
+    const imageUrl = document.getElementById('player-image-url').value;
 
-    const newPlayer = { name, breed, status };
+    const newPlayer = { name, breed, status, imageUrl };
     await addNewPlayer(newPlayer);
     const players = await fetchAllPlayers();
+    //clear the form
+    document.getElementById('player-name').value = '';
+    document.getElementById('player-breed').value = '';
+    document.getElementById('player-status').value = '';
+    document.getElementById('player-image-url').value = '';
     renderAllPlayers(players);
+
 };
+
 
 const init = async () => {
     const players = await fetchAllPlayers();
